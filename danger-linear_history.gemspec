@@ -1,19 +1,20 @@
 # coding: utf-8
+
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'linear_history/gem_version.rb'
+require 'version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'danger-linear_history'
   spec.version       = LinearHistory::VERSION
   spec.authors       = ['Alexsander Akers']
   spec.email         = ['me@a2.io']
-  spec.description   = %q{A short description of danger-linear_history.}
-  spec.summary       = %q{A longer description of danger-linear_history.}
-  spec.homepage      = 'https://github.com/Alexsander Akers/danger-linear_history'
+  spec.description   = 'A short description of danger-linear_history.'
+  spec.summary       = 'A longer description of danger-linear_history.'
+  spec.homepage      = 'https://github.com/a2/danger-linear_history'
   spec.license       = 'MIT'
 
-  spec.files         = `git ls-files`.split($/)
+  spec.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
@@ -28,8 +29,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 3.4'
 
   # Linting code and docs
-  spec.add_development_dependency "rubocop", "~> 0.41"
-  spec.add_development_dependency "yard", "~> 0.8"
+  spec.add_development_dependency 'rubocop', '~> 0.41'
+  spec.add_development_dependency 'yard', '~> 0.8'
 
   # Makes testing easy via `bundle exec guard`
   spec.add_development_dependency 'guard', '~> 2.14'

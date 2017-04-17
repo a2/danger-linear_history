@@ -1,41 +1,77 @@
+require 'fileutils'
+require 'git'
+
 require File.expand_path('../spec_helper', __FILE__)
 
 module Danger
-  describe Danger::DangerLinearHistory do
+  describe Danger::LinearHistory do
     it 'should be a plugin' do
-      expect(Danger::DangerLinearHistory.new(nil)).to be_a Danger::Plugin
+      expect(Danger::LinearHistory.new(nil)).to be_a Danger::Plugin
     end
 
-    #
-    # You should test your custom attributes and methods here
-    #
     describe 'with Dangerfile' do
       before do
         @dangerfile = testing_dangerfile
         @my_plugin = @dangerfile.linear_history
       end
 
-      # Some examples for writing tests
-      # You should replace these with your own.
+      context 'with linear history' do
+        before(:all) do
+          repo = File.expand_path('../fixtures/linear', __FILE__)
+          @git = Git.clone(repo, Dir.mktmpdir)
+        end
 
-      it "Warns on a monday" do
-        monday_date = Date.parse("2016-07-11")
-        allow(Date).to receive(:today).and_return monday_date
+        after(:all) do
+          FileUtils.rm_rf(@git.dir.path)
+        end
 
-        @my_plugin.warn_on_mondays
+        it 'does nothing' do
+          allow_any_instance_of(Danger::LinearHistory).to \
+            receive(:commits).and_return @git.log
 
-        expect(@dangerfile.status_report[:warnings]).to eq(["Trying to merge code on a Monday"])
+          @my_plugin.validate!
+
+          expect(@dangerfile.status_report[:warnings]).to eq([])
+          expect(@dangerfile.status_report[:errors]).to eq([])
+        end
       end
 
-      it "Does nothing on a tuesday" do
-        monday_date = Date.parse("2016-07-12")
-        allow(Date).to receive(:today).and_return monday_date
+      context 'with nonlinear history' do
+        before(:all) do
+          repo = File.expand_path('../fixtures/nonlinear', __FILE__)
+          @git = Git.clone(repo, Dir.mktmpdir)
+        end
 
-        @my_plugin.warn_on_mondays
+        after(:all) do
+          FileUtils.rm_rf(@git.dir.path)
+        end
 
-        expect(@dangerfile.status_report[:warnings]).to eq([])
+        context 'soft_fail is false' do
+          it 'errors' do
+            allow_any_instance_of(Danger::LinearHistory).to \
+              receive(:commits).and_return @git.log
+
+            @my_plugin.validate!(soft_fail: false)
+
+            message = 'Please rebase to get rid of the merge commits in this PR'
+            expect(@dangerfile.status_report[:warnings]).to eq([])
+            expect(@dangerfile.status_report[:errors]).to eq([message])
+          end
+        end
+
+        context 'soft_fail is true' do
+          it 'warns' do
+            allow_any_instance_of(Danger::LinearHistory).to \
+              receive(:commits).and_return @git.log
+
+            @my_plugin.validate!(soft_fail: true)
+
+            message = 'Please rebase to get rid of the merge commits in this PR'
+            expect(@dangerfile.status_report[:warnings]).to eq([message])
+            expect(@dangerfile.status_report[:errors]).to eq([])
+          end
+        end
       end
-
     end
   end
 end

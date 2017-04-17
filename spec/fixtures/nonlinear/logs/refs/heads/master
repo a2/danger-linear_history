@@ -1,0 +1,5 @@
+0000000000000000000000000000000000000000 2fabe9bcae49ccecd9f47b9a03c15099d84305a9 Alexsander Akers <me@a2.io> 1492437070 +0200	commit (initial): A
+2fabe9bcae49ccecd9f47b9a03c15099d84305a9 9c64bab5028e6dfd053ee266e9b763f610e1dc53 Alexsander Akers <me@a2.io> 1492437092 +0200	commit: B
+9c64bab5028e6dfd053ee266e9b763f610e1dc53 2fabe9bcae49ccecd9f47b9a03c15099d84305a9 Alexsander Akers <me@a2.io> 1492437097 +0200	reset: moving to HEAD^
+2fabe9bcae49ccecd9f47b9a03c15099d84305a9 9c64bab5028e6dfd053ee266e9b763f610e1dc53 Alexsander Akers <me@a2.io> 1492437113 +0200	reset: moving to 9c64
+9c64bab5028e6dfd053ee266e9b763f610e1dc53 87de2a305c7415d3274bfa9b87ed727f0fe77b05 Alexsander Akers <me@a2.io> 1492437169 +0200	commit (merge): Merge commit

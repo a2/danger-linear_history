@@ -1,0 +1,15 @@
+Metrics/BlockLength:
+  Enabled: false
+
+Style/Documentation:
+  Exclude:
+    - 'spec/**/*'
+    - 'test/**/*'
+
+Style/GuardClause:
+  Exclude:
+    - 'lib/danger_plugin.rb'
+
+Style/SignalException:
+  Exclude:
+    - 'lib/danger_plugin.rb'
