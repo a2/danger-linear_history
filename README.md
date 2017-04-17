@@ -1,15 +1,18 @@
 # danger-linear_history
 
-A description of danger-linear_history.
+Enforce linear history inside your project.
 
 ## Installation
 
-    $ gem install danger-linear_history
+```sh
+$ gem install danger-linear_history
+```
 
 ## Usage
 
-    Methods and attributes from this plugin are available in
-    your `Dangerfile` under the `linear_history` namespace.
+```ruby
+linear_history.validate!
+```
 
 ## Development
 

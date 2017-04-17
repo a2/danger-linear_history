@@ -18,11 +18,13 @@ module Danger
       context 'with linear history' do
         before(:all) do
           repo = File.expand_path('../fixtures/linear', __FILE__)
-          @git = Git.clone(repo, Dir.mktmpdir)
+          @dir = Dir.mktmpdir
+          FileUtils.cp_r(repo, @dir + '/.git')
+          @git = Git.open(@dir)
         end
 
         after(:all) do
-          FileUtils.rm_rf(@git.dir.path)
+          FileUtils.rm_rf(@dir)
         end
 
         it 'does nothing' do
@@ -39,11 +41,13 @@ module Danger
       context 'with nonlinear history' do
         before(:all) do
           repo = File.expand_path('../fixtures/nonlinear', __FILE__)
-          @git = Git.clone(repo, Dir.mktmpdir)
+          @dir = Dir.mktmpdir
+          FileUtils.cp_r(repo, @dir + '/.git')
+          @git = Git.open(@dir)
         end
 
         after(:all) do
-          FileUtils.rm_rf(@git.dir.path)
+          FileUtils.rm_rf(@dir)
         end
 
         context 'soft_fail is false' do
