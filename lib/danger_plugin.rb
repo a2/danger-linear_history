@@ -25,7 +25,7 @@ module Danger
     # @return [void]
     #
     def validate!(soft_fail: true)
-      return unless commits.any? { |commit| commit.parents.length > 1 }
+      return unless git.commits.any? { |commit| commit.parents.length > 1 }
 
       message = 'Please rebase to get rid of the merge commits in this PR'
 
