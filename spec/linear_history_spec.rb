@@ -20,6 +20,7 @@ module Danger
           repo = File.expand_path('../fixtures/linear', __FILE__)
           @dir = Dir.mktmpdir
           FileUtils.cp_r(repo, @dir + '/.git')
+          Dir.chdir(@dir) { `git init` }
           @git = Git.open(@dir)
         end
 
@@ -43,6 +44,7 @@ module Danger
           repo = File.expand_path('../fixtures/nonlinear', __FILE__)
           @dir = Dir.mktmpdir
           FileUtils.cp_r(repo, @dir + '/.git')
+          Dir.chdir(@dir) { `git init` }
           @git = Git.open(@dir)
         end
 
