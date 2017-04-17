@@ -29,8 +29,8 @@ module Danger
         end
 
         it 'does nothing' do
-          allow_any_instance_of(Danger::LinearHistory).to \
-            receive(:commits).and_return @git.log
+          allow_any_instance_of(Danger::DangerfileGitPlugin).to \
+            receive(:commits).and_return @git.log.to_a
 
           @my_plugin.validate!
 
@@ -54,8 +54,8 @@ module Danger
 
         context 'soft_fail is false' do
           it 'errors' do
-            allow_any_instance_of(Danger::LinearHistory).to \
-              receive(:commits).and_return @git.log
+            allow_any_instance_of(Danger::DangerfileGitPlugin).to \
+              receive(:commits).and_return @git.log.to_a
 
             @my_plugin.validate!(soft_fail: false)
 
@@ -67,8 +67,8 @@ module Danger
 
         context 'soft_fail is true' do
           it 'warns' do
-            allow_any_instance_of(Danger::LinearHistory).to \
-              receive(:commits).and_return @git.log
+            allow_any_instance_of(Danger::DangerfileGitPlugin).to \
+              receive(:commits).and_return @git.log.to_a
 
             @my_plugin.validate!(soft_fail: true)
 
